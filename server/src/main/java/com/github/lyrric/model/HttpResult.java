@@ -97,7 +97,7 @@ public class HttpResult {
      * @return 响应
      */
     public static HttpResult failure(String errMsg) {
-        return failure(SUCCESS_STATUS, BUSINESS_EXCEPTION_CODE, errMsg,null);
+        return failure(FAILURE_STATUS, BUSINESS_EXCEPTION_CODE, errMsg,null);
     }
     /**
      * 出现预料之外的错误

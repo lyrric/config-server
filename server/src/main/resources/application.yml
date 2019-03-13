@@ -8,7 +8,7 @@ spring:
       username: root
       password:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/config_server?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://localhost:3306/config_server?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
       max-active: 5
       initial-size: 1
       keep-alive: true

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * 封装返回数据
  * @author wangxiaodong
  */
-@ControllerAdvice(annotations = {Controller.class, RestController.class})
+//@ControllerAdvice(annotations = {Controller.class, RestController.class})
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
 

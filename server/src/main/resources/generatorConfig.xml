@@ -7,7 +7,7 @@
 	<context id="context1" targetRuntime="MyBatis3">
 		<property name="javaFileEncoding" value="UTF-8"/>
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-			<property name="mappers" value="com.github.lyrric.mapper.BaseMapper"/>
+			<property name="mappers" value="com.github.lyrric.core.BaseMapper"/>
 		</plugin>
 
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
@@ -37,9 +37,10 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<table  tableName="user" enableCountByExample="false" enableUpdateByExample="false"
+		<table  tableName="config" enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<ignoreColumn column="id"/>
+			<columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
 		</table>
 	</context>
 </generatorConfiguration>
