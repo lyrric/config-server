@@ -1,0 +1,4 @@
+server.port=8081
+conf.server.host=http://localhost:8080
+conf.group.id=test_group
+conf.data.id= test_data

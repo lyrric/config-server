@@ -2,6 +2,7 @@ package com.github.lyrric.controller;
 
 import com.github.lyrric.entity.Config;
 import com.github.lyrric.service.ConfigService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +17,10 @@ import java.util.Date;
  *
  * @author wangxiaodong
  */
+@Api(value = "配置服务")
 @RestController
-@RequestMapping(value = "/api/remote")
-public class RemoteController {
+@RequestMapping(value = "/api/conf")
+public class ConfigController {
 
     @Resource
     private ConfigService configService;
@@ -27,13 +29,11 @@ public class RemoteController {
      * 获取指定的配置
      * @param confGroupId
      * @param confDataId
-     * @param confAppKey
      * @return
      */
-    @GetMapping(value = "/conf/get")
+    @GetMapping(value = "/get")
     public Config get(@RequestParam String confGroupId,
-                      @RequestParam String confDataId,
-                      @RequestParam String confAppKey){
+                      @RequestParam String confDataId){
         return configService.get(confGroupId, confDataId);
     }
 
@@ -43,7 +43,7 @@ public class RemoteController {
      * @param confDataId
      * @return
      */
-    @GetMapping(value = "/conf/modified-time")
+    @GetMapping(value = "/modified-time")
     public Date getModifiedTime(@RequestParam String confGroupId,
                                 @RequestParam String confDataId){
         Config conf = configService.get(confGroupId, confDataId);

@@ -1,16 +1,15 @@
-package com.github.lyrric.entity;
+package com.github.lyrric.model;
 
 import lombok.Data;
 
 import java.util.Date;
-import javax.persistence.*;
 
 @Data
-public class Config extends BaseEntity {
-    @Column(name = "group_id")
+public class Config {
+
+    private Integer id;
     private String groupId;
 
-    @Column(name = "data_id")
     private String dataId;
 
     private String content;
@@ -18,12 +17,10 @@ public class Config extends BaseEntity {
     /**
      * 创建时间
      */
-    @Column(name = "created_time")
     private Date createdTime;
 
     /**
      * 修改时间
      */
-    @Column(name = "modified_time")
     private Date modifiedTime;
 }

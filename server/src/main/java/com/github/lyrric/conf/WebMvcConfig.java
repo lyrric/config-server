@@ -1,6 +1,6 @@
 package com.github.lyrric.conf;
 
-import com.github.lyrric.plugin.AppKeyInterceptor;
+import com.github.lyrric.plugin.ParamInterceptor;
 import com.github.lyrric.plugin.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Resource
     private LoginInterceptor loginInterceptor;
     @Resource
-    private AppKeyInterceptor appKeyInterceptor;
+    private ParamInterceptor paramInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -34,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 "/api/user/login#**",
                 "/api/remote/**");
 
-        registration = registry.addInterceptor(appKeyInterceptor);
+        registration = registry.addInterceptor(paramInterceptor);
         registration.addPathPatterns("/api/remote/**");
     }
 }

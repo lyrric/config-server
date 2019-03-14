@@ -1,0 +1,6 @@
+server:
+  port: 8081
+conf:
+  server-host: http://localhost:8080
+  group-id: test_group
+  data-id: test_data
