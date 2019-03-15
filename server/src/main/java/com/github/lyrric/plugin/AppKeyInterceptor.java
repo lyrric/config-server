@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings("all")
 @Component
-public class ParamInterceptor extends HandlerInterceptorAdapter {
+public class AppKeyInterceptor extends HandlerInterceptorAdapter {
     @Resource
     private ConfigMapper configMapper;
 
@@ -34,6 +34,7 @@ public class ParamInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String confGroupId = request.getParameter(ConfConstant.CONF_GROUP_ID_ATTRIBUTE);
         String confDataId = request.getParameter(ConfConstant.CONF_DATA_ID_ATTRIBUTE);
+        String confAppKey = request.getParameter(ConfConstant.CONF_APP_KEY_ATTRIBUTE);
         if(StringUtils.isEmpty(confGroupId) || StringUtils.isEmpty(confDataId)){
             write(response, "参数错误");
             return false;
@@ -45,6 +46,10 @@ public class ParamInterceptor extends HandlerInterceptorAdapter {
         Config config = configMapper.selectOneByExample(weekend);
         if(config == null){
             write(response, "配置不存在");
+            return false;
+        }
+        if(!config.getAppKey().equals(confAppKey)){
+            write(response, "conf_app_key无效");
             return false;
         }
         return super.preHandle(request, response, handler);

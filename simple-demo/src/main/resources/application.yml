@@ -4,3 +4,5 @@ conf:
   server-host: http://localhost:8080
   group-id: test_group
   data-id: test_data
+  app-key: 123456
+  req-timeout: 2000

@@ -7,6 +7,12 @@ import javax.persistence.*;
 
 @Data
 public class Config extends BaseEntity {
+
+    /**
+     * 密匙
+     */
+    @Column(name = "app_key")
+    private String appKey;
     @Column(name = "group_id")
     private String groupId;
 

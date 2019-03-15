@@ -19,8 +19,8 @@ import java.util.Date;
  */
 @Api(value = "配置服务")
 @RestController
-@RequestMapping(value = "/api/conf")
-public class ConfigController {
+@RequestMapping(value = "/api/remote/conf")
+public class RemoteController {
 
     @Resource
     private ConfigService configService;
@@ -33,7 +33,8 @@ public class ConfigController {
      */
     @GetMapping(value = "/get")
     public Config get(@RequestParam String confGroupId,
-                      @RequestParam String confDataId){
+                      @RequestParam String confDataId,
+                      @RequestParam String confAppKey){
         return configService.get(confGroupId, confDataId);
     }
 
@@ -45,7 +46,8 @@ public class ConfigController {
      */
     @GetMapping(value = "/modified-time")
     public Date getModifiedTime(@RequestParam String confGroupId,
-                                @RequestParam String confDataId){
+                                @RequestParam String confDataId,
+                                @RequestParam String confAppKey){
         Config conf = configService.get(confGroupId, confDataId);
         return conf.getModifiedTime();
     }

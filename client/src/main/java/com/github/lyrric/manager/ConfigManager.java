@@ -17,7 +17,8 @@ public interface ConfigManager {
 
     /**
      * 开始定时刷新配置
+     * @param event 监听器
      */
-    void start();
+    void start(ConfigChangeEvent event);
 
 }

@@ -15,6 +15,10 @@ public class Config {
     private String content;
 
     /**
+     * 密匙
+     */
+    private String appKey;
+    /**
      * 创建时间
      */
     private Date createdTime;

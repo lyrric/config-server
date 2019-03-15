@@ -50,6 +50,9 @@ public class HttpResult {
      */
     private Object data;
 
+    public HttpResult() {
+    }
+
     private HttpResult(boolean success, int code, String errMsg, Object data) {
         this.success = success;
         this.code = code;

@@ -24,5 +24,12 @@ public class ConfigProperties {
      * conf_data_id
      */
     private String dataId;
-
+    /**
+     * conf_app_key
+     */
+    private String appKey;
+    /**
+     * request timeout,millisecond,default 2000
+     */
+    private Integer reqTimeout;
 }
