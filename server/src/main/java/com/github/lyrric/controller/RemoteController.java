@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created on 2019/3/13.
@@ -27,15 +30,15 @@ public class RemoteController {
 
     /**
      * 获取指定的配置
-     * @param confGroupId
-     * @param confDataId
+     * @param confGroupIds
+     * @param confDataIds
      * @return
      */
     @GetMapping(value = "/get")
-    public Config get(@RequestParam String confGroupId,
-                      @RequestParam String confDataId,
-                      @RequestParam String confAppKey){
-        return configService.get(confGroupId, confDataId);
+    public List<Config> get(@RequestParam String confGroupIds,
+                           @RequestParam String confDataIds,
+                           @RequestParam String confAppKeys){
+        return configService.get(confGroupIds, confDataIds);
     }
 
     /**
@@ -45,10 +48,10 @@ public class RemoteController {
      * @return
      */
     @GetMapping(value = "/modified-time")
-    public Date getModifiedTime(@RequestParam String confGroupId,
+    public List<Date> getModifiedTime(@RequestParam String confGroupId,
                                 @RequestParam String confDataId,
                                 @RequestParam String confAppKey){
-        Config conf = configService.get(confGroupId, confDataId);
-        return conf.getModifiedTime();
+        List<Config> confList = configService.get(confGroupId, confDataId);
+        return confList.stream().map(Config::getModifiedTime).collect(Collectors.toList());
     }
 }

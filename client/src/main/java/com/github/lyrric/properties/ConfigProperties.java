@@ -19,15 +19,15 @@ public class ConfigProperties {
     /**
      * conf_group_id
      */
-    private String groupId;
+    private String groupIds;
     /**
      * conf_data_id
      */
-    private String dataId;
+    private String dataIds;
     /**
      * conf_app_key
      */
-    private String appKey;
+    private String appKeys;
     /**
      * request timeout,millisecond,default 2000
      */

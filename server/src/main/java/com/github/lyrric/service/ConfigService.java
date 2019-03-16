@@ -2,6 +2,8 @@ package com.github.lyrric.service;
 
 import com.github.lyrric.entity.Config;
 
+import java.util.List;
+
 /**
  * Created on 2019/3/13.
  *
@@ -11,9 +13,9 @@ public interface ConfigService {
 
     /**
      * 获取配置
-     * @param confGroupId
-     * @param confDataId
+     * @param confGroupIds
+     * @param confDataIds
      * @return
      */
-    Config get(String confGroupId, String confDataId);
+    List<Config> get(String confGroupIds, String confDataIds);
 }

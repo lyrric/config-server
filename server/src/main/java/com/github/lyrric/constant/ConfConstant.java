@@ -6,7 +6,7 @@ package com.github.lyrric.constant;
  * @author wangxiaodong
  */
 public class ConfConstant {
-    public static final String CONF_GROUP_ID_ATTRIBUTE = "confGroupId";
-    public static final String CONF_DATA_ID_ATTRIBUTE = "confDataId";
-    public static final String CONF_APP_KEY_ATTRIBUTE = "confAppKey";
+    public static final String CONF_GROUP_ID_ATTRIBUTE = "confGroupIds";
+    public static final String CONF_DATA_ID_ATTRIBUTE = "confDataIds";
+    public static final String CONF_APP_KEY_ATTRIBUTE = "confAppKeys";
 }
