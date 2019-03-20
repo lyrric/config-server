@@ -24,9 +24,9 @@ import java.util.Properties;
 @CommonsLog
 public class ConfigListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
-    private static final String CONFIG_DATA_ID  = "conf.data-id";
-    private static final String CONFIG_GROUP_ID = "conf.group-id";
-    private static final String CONFIG_APP_KEY = "conf.app-key";
+    private static final String CONFIG_DATA_ID  = "conf.data-ids";
+    private static final String CONFIG_GROUP_ID = "conf.group-ids";
+    private static final String CONFIG_APP_KEY = "conf.app-keys";
     private static final String CONFIG_SERVER_HOST = "conf.server-host";
     private static final String CONFIG_REQ_TIMEOUT = "conf.req-timeout";
     private static final String CONFIG_NAME = "default";
@@ -66,8 +66,8 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
         //第一次进行初始化配置
         try {
             log.info("初始化获取配置");
-            Config config = configManager.getConfig();
-            refreshConfig(config.getContent());
+            String content = configManager.getConfig();
+            refreshConfig(content);
         }catch (Exception e){
             log.error("初始化获取配置失败");
             e.printStackTrace();

@@ -29,8 +29,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter,
                                       MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass,
                                       ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if(null == o){
-            return HttpResult.success(null);
+        //swagger接口不封装返回数据
+        String path = serverHttpRequest.getURI().getPath();
+        if("/swagger-resources".equals(path) || "  /v2/api-docs".equals(path)){
+            return o;
         }
         return HttpResult.success(o);
     }

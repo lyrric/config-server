@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -48,10 +49,10 @@ public class RemoteController {
      * @return
      */
     @GetMapping(value = "/modified-time")
-    public List<Date> getModifiedTime(@RequestParam String confGroupId,
-                                @RequestParam String confDataId,
-                                @RequestParam String confAppKey){
+    public Map<String, Date> getModifiedTime(@RequestParam String confGroupId,
+                                     @RequestParam String confDataId,
+                                     @RequestParam String confAppKey){
         List<Config> confList = configService.get(confGroupId, confDataId);
-        return confList.stream().map(Config::getModifiedTime).collect(Collectors.toList());
+        return confList.stream().collect(Collectors.toMap(Config::getDataId, Config::getModifiedTime));
     }
 }

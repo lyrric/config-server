@@ -13,7 +13,7 @@ public interface ConfigManager {
      * @return
      * @throws Exception
      */
-    Config getConfig() throws Exception;
+    String getConfig() throws Exception;
 
     /**
      * 开始定时刷新配置

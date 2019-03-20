@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Value("${test.value}")
-    private String test;
+    private String value;
+    @Value("${test.name}")
+    private String name;
 
     @GetMapping(value = "/test")
     public String test(){
-       return test;
+       return name+"-----"+value;
     }
 }

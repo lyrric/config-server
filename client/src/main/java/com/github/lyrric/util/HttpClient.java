@@ -1,6 +1,7 @@
 package com.github.lyrric.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.github.lyrric.model.Config;
 import com.github.lyrric.model.HttpResult;
 import okhttp3.HttpUrl;
@@ -10,6 +11,8 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -57,17 +60,17 @@ public class HttpClient {
      * 请求配置
      * @return
      */
-    public Config getConfig() throws IOException {
+    public List<Config> getConfig() throws IOException {
         final String url = confServerHost + "/api/remote/conf/get";
-        return JSONObject.parseObject(httpGet(url), Config.class);
+        return JSONObject.parseArray(httpGet(url), Config.class);
     }
     /**
      * 获取配置上一次的修改时间
      * @return
      */
-    public Date getModifiedTime() throws IOException {
+    public Map<String, Date> getModifiedTime() throws IOException {
         final String url = confServerHost + "/api/remote/conf/modified-time";
-        return JSONObject.parseObject(httpGet(url), Date.class);
+        return JSONObject.parseObject(httpGet(url), new TypeReference<Map<String, Date>>(){});
     }
 
     /**
@@ -78,9 +81,9 @@ public class HttpClient {
     @SuppressWarnings("all")
     private String httpGet(String url) throws RuntimeException, IOException {
         HttpUrl.Builder param = HttpUrl.parse(url).newBuilder();
-        param.addQueryParameter("confGroupId", confGroupId);
-        param.addQueryParameter("confDataId", confDataId);
-        param.addQueryParameter("confAppKey", confAppKey);
+        param.addQueryParameter("confGroupIds", confGroupId);
+        param.addQueryParameter("confDataIds", confDataId);
+        param.addQueryParameter("confAppKeys", confAppKey);
         Request request = new Request.Builder()
                 .url(param.build())
                 .get()
