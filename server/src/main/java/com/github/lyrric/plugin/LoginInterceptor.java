@@ -33,7 +33,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     private void write(HttpServletResponse response, String errMsg) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
-        writer.write(JSONObject.toJSONString(HttpResult.failure(errMsg)));
+        writer.write(JSONObject.toJSONString(HttpResult.failure(false, 5000, errMsg, null)));
         writer.flush();
         writer.close();
     }

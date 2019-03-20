@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lyrric.mapper.manual.ConfigExtMapper">
+  <resultMap id="BaseResultMap" type="com.github.lyrric.entity.Config">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="data_id" jdbcType="VARCHAR" property="dataId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  
+  <select id="page" resultMap="BaseResultMap">
+    select id,group_id,data_id,created_time
+      from config
+      where 1 = 1
+      <if test="groupId !=null and groupId != ''">
+        and group_id like concat('%', #{groupId}, '%')
+      </if>
+      <if test="dataId !=null and dataId != ''">
+        and data_id like concat('%', #{dataId}, '%')
+      </if>
+  </select>
+</mapper>

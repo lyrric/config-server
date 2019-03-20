@@ -29,6 +29,8 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
     private static final String CONFIG_APP_KEY = "conf.app-keys";
     private static final String CONFIG_SERVER_HOST = "conf.server-host";
     private static final String CONFIG_REQ_TIMEOUT = "conf.req-timeout";
+    private static final String CONFIG_AUTO_REFRESH= "conf.auto-refresh";
+
     private static final String CONFIG_NAME = "default";
 
     /**
@@ -49,9 +51,11 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
         String confDataId = environment.getProperty(CONFIG_DATA_ID);
         String confServerHost = environment.getProperty(CONFIG_SERVER_HOST);
         String confAppKey = environment.getProperty(CONFIG_APP_KEY);
+        Boolean confAutoRefresh = Boolean.valueOf(environment.getProperty(CONFIG_AUTO_REFRESH));
+
         Integer confReqTimeout = Integer.parseInt(environment.getProperty(CONFIG_REQ_TIMEOUT));
         if(confGroupId != null && confDataId != null && confServerHost != null && confAppKey != null){
-            init(confGroupId, confDataId, confServerHost, confAppKey, confReqTimeout);
+            init(confGroupId, confDataId, confServerHost, confAppKey, confReqTimeout, confAutoRefresh);
         }
 
     }
@@ -61,7 +65,7 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
      * @param confGroupId
      * @param confDataId
      */
-    private void init(String confGroupId, String confDataId, String confServerHost, String confAppKey, Integer confReqTimeout){
+    private void init(String confGroupId, String confDataId, String confServerHost, String confAppKey, Integer confReqTimeout, Boolean confAutoRefresh){
         ConfigManager configManager = new DefaultConfigManager(confGroupId, confDataId, confServerHost, confAppKey, confReqTimeout);
         //第一次进行初始化配置
         try {
@@ -72,10 +76,13 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
             log.error("初始化获取配置失败");
             e.printStackTrace();
         }
-        //开启定时刷新
-        configManager.start((content)->{
-            refreshConfig(content);
-        });
+
+        //是否定时刷新
+        if(confAutoRefresh != null && confAutoRefresh){
+            configManager.start((content)->{
+                refreshConfig(content);
+            });
+        }
     }
 
     private void refreshConfig(String content){

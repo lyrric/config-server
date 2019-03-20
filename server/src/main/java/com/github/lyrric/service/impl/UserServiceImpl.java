@@ -5,12 +5,14 @@ import com.github.lyrric.mapper.UserMapper;
 import com.github.lyrric.model.BusinessException;
 import com.github.lyrric.service.UserService;
 import com.github.lyrric.util.UserSessionUtil;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.weekend.Weekend;
 
 import javax.annotation.Resource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created on 2019/3/12.
@@ -31,10 +33,11 @@ public class UserServiceImpl implements UserService {
         Weekend<User> weekend = new Weekend<>(User.class);
         weekend.weekendCriteria().andEqualTo(User::getUsername, username);
         User user = userMapper.selectOneByExample(weekend);
-        if(null == user || !user.getPassword().equals(MD5Encoder.encode(password.getBytes()))){
+        if(null == user || !user.getPassword().equals(DigestUtils.md5DigestAsHex(password.getBytes()))){
             throw new BusinessException("用户名或密码错误");
         }
         user.setPassword(null);
         UserSessionUtil.setSession(user);
     }
+
 }

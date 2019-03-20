@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <script src="/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="/js/common.js" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+        <label>用户名：</label><input type="text" id="username" value="admin"><br/>
+        <label>密码：&nbsp;&nbsp;&nbsp;</label><input type="password" id="password" value="admin"><br/>
+        <button id="loginBtn">登陆</button>
+    </div>
+</body>
+<script type="application/javascript">
+    $('#loginBtn').click(function(){
+        $.post(apiPreFix + "/user/login",
+            {
+                username:$('#username').val(),
+                password:$('#password').val()
+            }
+            ,function(data){
+                if(checkLogin(data)){
+                    window.location="/index.html";
+                }
+            });
+    });
+</script>
+</html>

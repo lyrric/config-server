@@ -46,12 +46,11 @@ public class DefaultConfigManager implements ConfigManager {
             public void run() {
                 try {
                     if(checkConfigModify()){
-                        log.info("检测到配置发生改变，更新配置");
                         List<Config> configList =  httpClient.getConfig();
                         String content = ConfigUtil.parseConfigContent(configList);
                         event.onchange(content);
                         modifyTimeMap = configList.stream().collect(Collectors.toMap(Config::getDataId, Config::getModifiedTime));
-
+                        log.info("配置更新完成");
                     }
                 } catch (IOException e) {
                     log.error("定时获取任务失败");
@@ -62,6 +61,7 @@ public class DefaultConfigManager implements ConfigManager {
         Timer timer = new Timer();
         timer.schedule(task, 1000 * 30, 1000 * 10);
     }
+
 
     /**
      * 判断配置是否发生改变
@@ -75,7 +75,9 @@ public class DefaultConfigManager implements ConfigManager {
                 if(date.equals(modifyTimeMap.get(entry.getKey()))){
                     continue;
                 }
+                log.info("检测到" + entry.getKey() + "发生改变");
                 return true;
+
             }
         } catch (IOException e) {
             e.printStackTrace();

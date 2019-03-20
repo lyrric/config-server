@@ -1,5 +1,6 @@
 package com.github.lyrric.conf;
 
+import com.github.lyrric.constant.ApiConstant;
 import com.github.lyrric.plugin.AppKeyInterceptor;
 import com.github.lyrric.plugin.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration registration = registry.addInterceptor(loginInterceptor);
-        registration.addPathPatterns("/api/**");
-        registration.excludePathPatterns("/swagger-ui.html**",
-                "/swagger-resources/**",
-                "/webjars/**",
-                "/images/**",
-                "/v2/**",
-                "/api/user/login#**",
+        registration.addPathPatterns(ApiConstant.API_PREFIX + "/**");
+        registration.excludePathPatterns(ApiConstant.API_PREFIX  + "/user/login",
                 "/api/remote/conf/**");
 
         registration = registry.addInterceptor(appKeyInterceptor);

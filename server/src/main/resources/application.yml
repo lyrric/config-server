@@ -12,5 +12,8 @@ spring:
       max-active: 5
       initial-size: 1
       keep-alive: true
+  resources:
+    static-locations: classpath:static/
 mybatis:
   mapper-locations: classpath:mapper/**.xml
+

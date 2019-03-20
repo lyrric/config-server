@@ -1,6 +1,7 @@
 package com.github.lyrric.service;
 
 import com.github.lyrric.entity.Config;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -18,4 +19,14 @@ public interface ConfigService {
      * @return
      */
     List<Config> get(String confGroupIds, String confDataIds);
+
+    /**
+     * 列表
+     * @param groupId
+     * @param dataId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<Config> page(String groupId, String dataId, int pageNum, int pageSize);
 }

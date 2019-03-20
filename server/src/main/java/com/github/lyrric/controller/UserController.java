@@ -1,10 +1,14 @@
 package com.github.lyrric.controller;
 
+import com.github.lyrric.constant.ApiConstant;
 import com.github.lyrric.model.BusinessException;
 import com.github.lyrric.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * Created on 2019/3/12.
@@ -12,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wangxiaodong
  */
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = ApiConstant.API_PREFIX + "/user")
 public class UserController {
 
+    @Resource
     private UserService userService;
 
     /**
@@ -24,7 +29,7 @@ public class UserController {
      * @throws BusinessException
      */
     @PostMapping(value = "/login")
-    public void login(String username, String password) throws BusinessException {
+    public void login(@RequestParam String username, @RequestParam String password) throws BusinessException {
         userService.login(username, password);
     }
 

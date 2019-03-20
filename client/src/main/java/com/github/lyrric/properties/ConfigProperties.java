@@ -32,4 +32,9 @@ public class ConfigProperties {
      * request timeout,millisecond,default 2000
      */
     private Integer reqTimeout;
+    /**
+     *  auto refresh , no useless until now
+     */
+    @Deprecated
+    private Boolean autoRefresh;
 }
