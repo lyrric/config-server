@@ -7,18 +7,64 @@
     <script src="/js/common.js" type="text/javascript"></script>
 </head>
 <body>
-    <label>group_id:</label><input type="text" id="group_id" /> <label>data_id:</label><input type="text" id="data_id" /> <button id="search">查询</button><br/>
-    <table id="list"></table>
+    <div style="margin-left: 100px;margin-top: 100px;width: 500px;height: 500px;">
+        <label>group_id:</label><input type="text" id="group_id" value="test" /> <label>data_id:</label><input type="text" id="data_id" /> <button id="search">查询</button><br/>
+        <table id="list" border="1px">
+            <tr>
+                <td style="width: 50px;">序号</td>
+                <td style="width: 100px;">group_id</td>
+                <td style="width: 100px;">data_id</td>
+                <td style="width: 200px;">操作</td>
+            </tr>
+
+        </table>
+        <p></p>
+        <button id="last_page">上一页</button>
+        <button id="next_page">下一页</button>
+    </div>
+
+
 </body>
 <script type="application/javascript">
-    $('#search').click(apiPreFix+"/conf/list",
-        {
-            groupId:$('#group_id').val(),
-            dataId:$('#data_id').val()
-        },function (data) {
-            if(checkLogin(data)){
+    var pageNum = 1;
+    $('#search').click(function(){
+            getData(1)
+        }
+    );
+    function getData(pageNum){
+        $.get(apiPreFix+"/conf/list",
+            {
+                groupId:$('#group_id').val(),
+                dataId:$('#data_id').val(),
+                pageNum:pageNum,
+                pageSize:10
+            },function (response) {
+                if(checkLogin(response)){
+                    var data = response.data;
+                    if(data.hasNextPage){
+                        pageNum = data.nextPage;
+                    }
+                    var list = data.list;
+                    for(var i = 0;i<list.length; i++){
+                        var conf = list[i];
+                        var e = '';
+                        e += '<tr>';
+                        e += '<td>' + i + '</td>';
+                        e += '<td>' + conf.groupId + '</td>';
+                        e += '<td>' + conf.dataId + '</td>';
+                        e += '<td>';
+                        e += '<a href = "/content.html?id=' + conf.id + '">编辑</a>&nbsp;&nbsp;';
+                        e += '<a href = "delete(' + conf.id + ')">删除</a>';
+                        e += '</td>';
+                        e += '</tr>'
+                        $('#list').append(e);
+                    }
+                }
+            });
+    }
+    function delte(id){
 
-            }
-        });
+    }
 </script>
+
 </html>

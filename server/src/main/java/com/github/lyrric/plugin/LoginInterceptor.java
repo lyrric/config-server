@@ -23,7 +23,6 @@ import java.io.PrintWriter;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(request.getRequestURI());
         if(UserSessionUtil.getSession() == null){
             write(response, "你还没有登陆");
             return false;

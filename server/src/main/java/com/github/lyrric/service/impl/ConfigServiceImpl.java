@@ -40,8 +40,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public PageInfo<Config> page(String groupId, String dataId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-
-        return null;
+        return new PageInfo<>(configExtMapper.search(groupId, dataId));
     }
 
 }

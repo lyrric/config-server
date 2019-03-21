@@ -12,7 +12,7 @@
     <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
   </resultMap>
   
-  <select id="page" resultMap="BaseResultMap">
+  <select id="search" resultMap="BaseResultMap">
     select id,group_id,data_id,created_time
       from config
       where 1 = 1

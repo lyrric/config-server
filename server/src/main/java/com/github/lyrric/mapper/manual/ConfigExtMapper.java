@@ -1,6 +1,5 @@
 package com.github.lyrric.mapper.manual;
 
-import com.github.lyrric.core.BaseMapper;
 import com.github.lyrric.entity.Config;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * @author wangxiaodong
  */
-public interface ConfigExtMapper extends BaseMapper<Config> {
+public interface ConfigExtMapper{
 
     /**
      * 分页
@@ -18,6 +17,6 @@ public interface ConfigExtMapper extends BaseMapper<Config> {
      * @param dataId
      * @return
      */
-    Page<Config> page(@Param("groupId") String groupId,
+    Page<Config> search(@Param("groupId") String groupId,
                       @Param("dataId") String dataId);
 }
