@@ -2,13 +2,11 @@ package com.github.lyrric.controller;
 
 import com.github.lyrric.constant.ApiConstant;
 import com.github.lyrric.entity.Config;
+import com.github.lyrric.model.BusinessException;
 import com.github.lyrric.service.ConfigService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -38,5 +36,35 @@ public class ConfController {
                                  @RequestParam(defaultValue = "1", required = false) int pageNum,
                                  @RequestParam(defaultValue = "10", required = false)  int pageSize){
         return configService.page(groupId, dataId, pageNum, pageSize);
+    }
+
+    /**
+     * 获取配置详情
+     * @param id
+     * @return
+     * @throws BusinessException
+     */
+    @GetMapping(value = "/{id}")
+    public Config detail(@PathVariable Integer id) throws BusinessException {
+        return configService.findById(id);
+    }
+
+    /**
+     * 重新生成appKey
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/key/{id}")
+    public String randKey(@PathVariable Integer id) throws BusinessException {
+        return configService.randKey(id);
+    }
+
+    /**
+     * 保存
+     * @param config
+     */
+    @PostMapping
+    public void save(@RequestBody Config config) throws BusinessException {
+        configService.save(config);
     }
 }

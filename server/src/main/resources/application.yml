@@ -3,6 +3,13 @@ server:
 
 #数据库配置
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  messages:
+      encoding: UTF-8
   datasource:
     druid:
       username: root
@@ -16,4 +23,3 @@ spring:
     static-locations: classpath:static/
 mybatis:
   mapper-locations:  classpath:mapper/*.xml,classpath:mapper/**/*.xml
-

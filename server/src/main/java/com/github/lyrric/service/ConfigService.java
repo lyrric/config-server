@@ -1,6 +1,7 @@
 package com.github.lyrric.service;
 
 import com.github.lyrric.entity.Config;
+import com.github.lyrric.model.BusinessException;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -29,4 +30,23 @@ public interface ConfigService {
      * @return
      */
     PageInfo<Config> page(String groupId, String dataId, int pageNum, int pageSize);
+    /**
+     * 获取配置
+     * @param id
+     * @return
+     */
+    Config findById(Integer id) throws BusinessException;
+
+    /**
+     * 重置appKey，返回生成的key
+     * @param id
+     * @return
+     */
+    String randKey(Integer id) throws BusinessException;
+
+    /**
+     * 保存
+     * @param config
+     */
+    void save(Config config) throws BusinessException;
 }

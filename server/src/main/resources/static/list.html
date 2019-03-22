@@ -26,16 +26,27 @@
 
 </body>
 <script type="application/javascript">
-    var pageNum = 1;
+    var pageNum = getQueryString("pageNum");
+    pageNum = pageNum == null?1:pageNum;
+    var groupId = getQueryString("groupId");
+    var dataId = getQueryString("dataId");
+    $('#group_id').val(groupId);
+    $('#data_id').val(dataId);
+    $(function () {
+        getData();
+    });
     $('#search').click(function(){
-            getData(1)
+            pageNum = 1;
+            groupId = $('#group_id').val();
+            dataId = $('#data_id').val();
+            window.location.href = '/list.html?groupId='+groupId+'&dataId='+dataId+'&pageNum='+pageNum+'&pageSize=10';
         }
     );
     function getData(pageNum){
         $.get(apiPreFix+"/conf/list",
             {
-                groupId:$('#group_id').val(),
-                dataId:$('#data_id').val(),
+                groupId:groupId,
+                dataId:dataId,
                 pageNum:pageNum,
                 pageSize:10
             },function (response) {
@@ -56,7 +67,7 @@
                         e += '<a href = "/content.html?id=' + conf.id + '">编辑</a>&nbsp;&nbsp;';
                         e += '<a href = "delete(' + conf.id + ')">删除</a>';
                         e += '</td>';
-                        e += '</tr>'
+                        e += '</tr>';
                         $('#list').append(e);
                     }
                 }
