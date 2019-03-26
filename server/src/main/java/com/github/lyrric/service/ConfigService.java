@@ -49,4 +49,10 @@ public interface ConfigService {
      * @param config
      */
     void save(Config config) throws BusinessException;
+
+    /**
+     * 刪除
+     * @param id
+     */
+    void delete(int id);
 }

@@ -67,4 +67,15 @@ public class ConfController {
     public void save(@RequestBody Config config) throws BusinessException {
         configService.save(config);
     }
+
+    /**
+     * 刪除
+     * @param id
+     */
+    @GetMapping(value = "/del/{id}")
+    public void delete(@PathVariable(name = "id") Integer id){
+        if(null != id){
+            configService.delete(id);
+        }
+    }
 }

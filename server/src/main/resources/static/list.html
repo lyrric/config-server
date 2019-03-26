@@ -42,6 +42,11 @@
             window.location.href = '/list.html?groupId='+groupId+'&dataId='+dataId+'&pageNum='+pageNum+'&pageSize=10';
         }
     );
+
+    /**
+     * 获取数据
+     * @param id
+     */
     function getData(pageNum){
         $.get(apiPreFix+"/conf/list",
             {
@@ -65,7 +70,7 @@
                         e += '<td>' + conf.dataId + '</td>';
                         e += '<td>';
                         e += '<a href = "/content.html?id=' + conf.id + '">编辑</a>&nbsp;&nbsp;';
-                        e += '<a href = "delete(' + conf.id + ')">删除</a>';
+                        e += '<a href = "javascript:del(' + conf.id + ')">删除</a>';
                         e += '</td>';
                         e += '</tr>';
                         $('#list').append(e);
@@ -73,8 +78,18 @@
                 }
             });
     }
-    function delte(id){
 
+    /**
+     * 刪除
+     * @param id
+     */
+    function del(id){
+        $.get(apiPreFix+"/conf/del/"+id
+            ,function (response) {
+                if(checkLogin(response)){
+                    window.location.reload();
+                }
+            });
     }
 </script>
 

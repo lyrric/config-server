@@ -82,6 +82,11 @@ public class ConfigServiceImpl implements ConfigService {
 
     }
 
+    @Override
+    public void delete(int id) {
+        configMapper.deleteByPrimaryKey(id);
+    }
+
 
     private String randKey(){
        return UUID.randomUUID().toString().replace("-","");
