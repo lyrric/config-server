@@ -44,26 +44,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registration = registry.addInterceptor(appKeyInterceptor);
         registration.addPathPatterns("/api/remote/conf/**");
     }
-
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue);
-        fastConverter.setFastJsonConfig(fastJsonConfig);
-        List<MediaType> list = new ArrayList<>();
-        list.add(MediaType.APPLICATION_JSON_UTF8);
-        fastConverter.setSupportedMediaTypes(list);
-        converters.add(fastConverter);
-
-        //处理Indicator响应序列化
-        MappingJackson2HttpMessageConverter indicatorConverter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        indicatorConverter.setObjectMapper(objectMapper);
-        List<MediaType> indicatorMediaTypes = new ArrayList<MediaType>();
-        indicatorMediaTypes.add(new MediaType("application", "vnd.spring-boot.actuator.v1+json"));
-        indicatorConverter.setSupportedMediaTypes(indicatorMediaTypes);
-        converters.add(indicatorConverter);
-    }
 }

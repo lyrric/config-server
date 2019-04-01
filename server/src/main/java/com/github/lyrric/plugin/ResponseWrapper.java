@@ -1,5 +1,7 @@
 package com.github.lyrric.plugin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lyrric.model.HttpResult;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -19,7 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice(annotations = {Controller.class, RestController.class})
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
-
+    private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         return true;
@@ -33,6 +35,14 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
         String path = serverHttpRequest.getURI().getPath();
         if("/swagger-resources".equals(path) || "  /v2/api-docs".equals(path)){
             return o;
+        }
+        if(o instanceof String){
+            try {
+                return objectMapper.writeValueAsString(HttpResult.success(o));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         return HttpResult.success(o);
     }
