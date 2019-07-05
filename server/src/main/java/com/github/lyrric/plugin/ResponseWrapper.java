@@ -33,7 +33,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                       ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         //swagger接口不封装返回数据
         String path = serverHttpRequest.getURI().getPath();
-        if("/swagger-resources".equals(path) || "  /v2/api-docs".equals(path)){
+        if("/swagger-resources".equals(path) || "/v2/api-docs".equals(path)){
             return o;
         }
         if(o instanceof String){

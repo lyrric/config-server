@@ -1,8 +1,8 @@
 server:
-  port: 8081
+  port: 8088
 conf:
   server-host: http://localhost:8080
   group-ids: test_group
   data-ids: test_data1,test_data2
-  app-keys: 123456,123456
+  app-keys: 40333edd252b4f489a3aa22477f27180,123456
   req-timeout: 2000
