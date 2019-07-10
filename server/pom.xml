@@ -117,6 +117,7 @@
     </dependencies>
 
     <build>
+        <finalName>config-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
