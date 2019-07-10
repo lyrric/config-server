@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.lyrric</groupId>
-    <artifactId>simple-demo</artifactId>
+    <artifactId>config-simple-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>

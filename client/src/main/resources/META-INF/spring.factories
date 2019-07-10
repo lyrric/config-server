@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.lyrric.RemoteServerConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.lyrric.config.client.RemoteServerConfiguration
