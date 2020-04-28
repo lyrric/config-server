@@ -49,16 +49,6 @@ public class ConfController {
     }
 
     /**
-     * 重新生成appKey
-     * @param id
-     * @return
-     */
-    @GetMapping(value = "/key/{id}")
-    public String randKey(@PathVariable Integer id) throws BusinessException {
-        return configService.randKey(id);
-    }
-
-    /**
      * 保存
      * @param config
      */

@@ -1,6 +1,7 @@
 package com.github.lyrric.config.server.service;
 
 
+import com.github.lyrric.common.model.req.ReqConfigParam;
 import com.github.lyrric.config.server.entity.Config;
 import com.github.lyrric.config.server.model.BusinessException;
 import com.github.pagehelper.PageInfo;
@@ -16,11 +17,9 @@ public interface ConfigService {
 
     /**
      * 获取配置
-     * @param confGroupIds
-     * @param confDataIds
      * @return
      */
-    List<Config> get(String confGroupIds, String confDataIds);
+    List<Config> get(ReqConfigParam dtoList) throws BusinessException;
 
     /**
      * 列表
@@ -37,13 +36,6 @@ public interface ConfigService {
      * @return
      */
     Config findById(Integer id) throws BusinessException;
-
-    /**
-     * 重置appKey，返回生成的key
-     * @param id
-     * @return
-     */
-    String randKey(Integer id) throws BusinessException;
 
     /**
      * 保存

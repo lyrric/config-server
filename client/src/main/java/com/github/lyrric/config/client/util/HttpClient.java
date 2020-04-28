@@ -1,18 +1,15 @@
 package com.github.lyrric.config.client.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
+import com.github.lyrric.common.model.req.ReqConfigParam;
 import com.github.lyrric.config.client.model.Config;
 import com.github.lyrric.config.client.model.HttpResult;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.github.lyrric.config.client.properties.ConfigProperties;
+import okhttp3.*;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,36 +19,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpClient {
 
-    /**
-     * 服务host
-     */
-    private String confServerHost;
-    /**
-     * confGroupId
-     */
-    private String confGroupId;
-    /**
-     * confDataId
-     */
-    private String confDataId;
-    /**
-     * confAppKey
-     */
-    private String confAppKey;
+    private ConfigProperties properties;
     /**
      * 请求客户端
      */
     private OkHttpClient okHttpClient;
 
-    public HttpClient(String confGroupId, String confDataId, String confServerHost, String confAppKey, Integer reqTimeout) {
-        this.confGroupId = confGroupId;
-        this.confDataId = confDataId;
-        this.confServerHost = confServerHost;
-        this.confAppKey = confAppKey;
-        int timeOut = reqTimeout==null?2000:reqTimeout;
+    public HttpClient(ConfigProperties properties) {
+        this.properties = properties;
         okHttpClient = new OkHttpClient.Builder()
-                .callTimeout(timeOut,  TimeUnit.MILLISECONDS)
-                .connectTimeout(timeOut, TimeUnit.MILLISECONDS)
+                .callTimeout(properties.getReqTimeout(),  TimeUnit.MILLISECONDS)
+                .connectTimeout(properties.getReqTimeout(), TimeUnit.MILLISECONDS)
                 .build();
     }
 
@@ -61,32 +39,31 @@ public class HttpClient {
      * @return
      */
     public List<Config> getConfig() throws IOException {
-        final String url = confServerHost + "/api/remote/conf/get";
-        return JSONObject.parseArray(httpGet(url), Config.class);
+        final String url = properties.getServerHost() + "/api/remote/conf/get";
+        String json = initPostData();
+        return JSONObject.parseArray(httpPost(url, json), Config.class);
     }
     /**
      * 获取配置上一次的修改时间
      * @return
      */
-    public Map<String, Date> getModifiedTime() throws IOException {
-        final String url = confServerHost + "/api/remote/conf/modified-time";
-        return JSONObject.parseObject(httpGet(url), new TypeReference<Map<String, Date>>(){});
-    }
+/*    public Map<String, Date> getModifiedTime() throws IOException {
+        final String url = properties.getServerHost() + "/api/remote/conf/modified-time";
+        String json = JSONArray.toJSONString(properties.getConfigs());
+        return JSONObject.parseObject(httpPost(url, json), new TypeReference<Map<String, Date>>(){});
+    }*/
 
     /**
-     * 发送get请求
+     * 发送post请求
      * @param url
      * @return
      */
     @SuppressWarnings("all")
-    private String httpGet(String url) throws RuntimeException, IOException {
-        HttpUrl.Builder param = HttpUrl.parse(url).newBuilder();
-        param.addQueryParameter("confGroupIds", confGroupId);
-        param.addQueryParameter("confDataIds", confDataId);
-        param.addQueryParameter("confAppKeys", confAppKey);
+    private String httpPost(String url, String json) throws RuntimeException, IOException {
+        RequestBody body = RequestBody.create(MediaType.get("application/json"), json);
         Request request = new Request.Builder()
-                .url(param.build())
-                .get()
+                .url(url)
+                .post(body)
                 .header("Connection", "keep-alive")
                 .build();
         Response response = okHttpClient.newCall(request).execute();
@@ -96,5 +73,12 @@ public class HttpClient {
             throw new RuntimeException(result.getErrMsg());
         }
         return JSONObject.toJSONString(result.getData());
+    }
+
+    private String initPostData(){
+        ReqConfigParam reqConfigParam = new ReqConfigParam();
+        reqConfigParam.setGroupId(properties.getGroupId());
+        reqConfigParam.setDataIds(Arrays.asList(properties.getDataIds()));
+        return JSONObject.toJSONString(reqConfigParam);
     }
 }

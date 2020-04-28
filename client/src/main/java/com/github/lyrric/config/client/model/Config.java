@@ -1,23 +1,17 @@
 package com.github.lyrric.config.client.model;
 
-import lombok.Data;
 
 import java.util.Date;
 
-@Data
 public class Config {
 
     private Integer id;
+
     private String groupId;
 
     private String dataId;
 
     private String content;
-
-    /**
-     * 密匙
-     */
-    private String appKey;
     /**
      * 创建时间
      */
@@ -27,4 +21,53 @@ public class Config {
      * 修改时间
      */
     private Date modifiedTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getDataId() {
+        return dataId;
+    }
+
+    public void setDataId(String dataId) {
+        this.dataId = dataId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
 }

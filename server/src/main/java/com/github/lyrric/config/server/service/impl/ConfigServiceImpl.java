@@ -1,5 +1,6 @@
 package com.github.lyrric.config.server.service.impl;
 
+import com.github.lyrric.common.model.req.ReqConfigParam;
 import com.github.lyrric.config.server.entity.Config;
 import com.github.lyrric.config.server.mapper.ConfigMapper;
 import com.github.lyrric.config.server.mapper.manual.ConfigExtMapper;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.weekend.Weekend;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created on 2019/3/13.
@@ -28,13 +30,16 @@ public class ConfigServiceImpl implements ConfigService {
     private ConfigExtMapper configExtMapper;
 
     @Override
-    public List<Config> get(String confGroupIds, String confDataIds) {
-        List<String> confDataIdList = Arrays.asList(confDataIds.split(","));
+    public List<Config> get(ReqConfigParam param) throws BusinessException {
         Weekend<Config> weekend = new Weekend<>(Config.class);
         weekend.weekendCriteria()
-                .andEqualTo(Config::getGroupId, confGroupIds)
-                .andIn(Config::getDataId, confDataIdList);
-        return configMapper.selectByExample(weekend);
+                .andEqualTo(Config::getGroupId, param.getGroupId())
+                .andIn(Config::getDataId, param.getDataIds());
+        List<Config> configs = configMapper.selectByExample(weekend);
+        if(configs.size() == 0){
+            throw new BusinessException("没有符合条件的配置");
+        }
+        return configs;
     }
 
     @Override
@@ -52,19 +57,6 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public String randKey(Integer id) throws BusinessException {
-        if(id == null){
-            throw new BusinessException("ID错误");
-        }
-        String key = randKey();
-        Config config = new Config();
-        config.setAppKey(key);
-        config.setId(id);
-        configMapper.updateByPrimaryKeySelective(config);
-        return key;
-    }
-
-    @Override
     public void save(Config config) throws BusinessException {
         config.setModifiedTime(new Date());
         if(StringUtils.isEmpty(config.getGroupId()) ||
@@ -74,7 +66,6 @@ public class ConfigServiceImpl implements ConfigService {
         }
         if(config.getId() == null){
             config.setCreatedTime(new Date());
-            config.setAppKey(randKey());
             configMapper.insert(config);
         }else {
             configMapper.updateByPrimaryKeySelective(config);
@@ -87,8 +78,4 @@ public class ConfigServiceImpl implements ConfigService {
         configMapper.deleteByPrimaryKey(id);
     }
 
-
-    private String randKey(){
-       return UUID.randomUUID().toString().replace("-","");
-    }
 }

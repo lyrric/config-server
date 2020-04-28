@@ -10,7 +10,6 @@
 <div style="margin-top: 100px;margin-left: 100px;">
     <label>group_id:</label><input type="text" id="group_id" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
     <label>&nbsp;data_id:</label><input type="text" id="data_id"  style="width: 100px;"/><br/><br/>
-    <label>&nbsp;app_key:</label><input type="text" id="app_key"  style="width: 250px;" readonly/> <button id="randKey">重置app_key</button>
     <br/><br/>
     <textarea id = "content" style="width: 500px;height: 380px;">
     </textarea>
@@ -29,7 +28,6 @@
                     var data = response.data;
                     $('#group_id').val(data.groupId);
                     $('#data_id').val(data.dataId);
-                    $('#app_key').val(data.appKey);
                     $('#content').val(data.content);
                 }
             });
@@ -54,14 +52,6 @@
     });
     $('#goBack').click(function () {
         history.go(-1);
-    });
-    $('#randKey').click(function () {
-        $.get(apiPreFix + "/conf/key/"+confId, function (response) {
-            if(checkLogin(response)){
-                var data = response.data;
-                $('#app_key').val(data);
-            }
-        });
     });
 </script>
 </html>

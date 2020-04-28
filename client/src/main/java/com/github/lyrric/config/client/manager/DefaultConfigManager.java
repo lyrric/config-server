@@ -1,9 +1,11 @@
 package com.github.lyrric.config.client.manager;
 
 import com.github.lyrric.config.client.model.Config;
+import com.github.lyrric.config.client.properties.ConfigProperties;
 import com.github.lyrric.config.client.util.ConfigUtil;
 import com.github.lyrric.config.client.util.HttpClient;
-import lombok.extern.apachecommons.CommonsLog;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.util.*;
@@ -14,18 +16,18 @@ import java.util.stream.Collectors;
  *
  * @author wangxiaodong
  */
-@CommonsLog
 public class DefaultConfigManager implements ConfigManager {
 
     private HttpClient httpClient;
 
+    private Log log = LogFactory.getLog(DefaultConfigManager.class);
     /**
      * 配置上次修改时间
      */
     private Map<String, Date> modifyTimeMap;
 
-    public DefaultConfigManager(String confGroupId, String confDataId, String confServerHost, String confAppKey, Integer reqTimeout) {
-        httpClient = new HttpClient(confGroupId, confDataId, confServerHost, confAppKey, reqTimeout);
+    public DefaultConfigManager(ConfigProperties properties) {
+        httpClient = new HttpClient(properties);
         modifyTimeMap = new HashMap<>();
     }
 
@@ -65,7 +67,7 @@ public class DefaultConfigManager implements ConfigManager {
      * @return true=发生改变
      */
     private boolean checkConfigModify(){
-        try {
+        /*try {
             Map<String, Date> remoteModifyTime = httpClient.getModifiedTime();
             for(Map.Entry<String, Date> entry:remoteModifyTime.entrySet()){
                 Date date = entry.getValue();
@@ -78,7 +80,7 @@ public class DefaultConfigManager implements ConfigManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return false;
     }
 }
