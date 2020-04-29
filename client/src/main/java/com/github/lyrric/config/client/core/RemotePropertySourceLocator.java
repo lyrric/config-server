@@ -1,36 +1,30 @@
-package com.github.lyrric.config.client;
+package com.github.lyrric.config.client.core;
 
 import com.github.lyrric.config.client.manager.ConfigManager;
 import com.github.lyrric.config.client.manager.DefaultConfigManager;
+import com.github.lyrric.config.client.model.RemoteProperty;
 import com.github.lyrric.config.client.properties.ConfigProperties;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.MutablePropertySources;
-import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.cloud.bootstrap.config.PropertySourceLocator;
+import org.springframework.core.env.*;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * Created on 2019/3/14.
+ * Created on 2020-04-28.
  *
  * @author wangxiaodong
  */
-@SuppressWarnings("all")
-public class ConfigListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
+public class RemotePropertySourceLocator implements PropertySourceLocator {
 
-    private static final String CONFIG_CONFIGS = "conf";
-
-    private static final String CONFIG_NAME = "default";
+    private static final String CONFIG_NAME = "REMOTE_CONFIG";
 
     private Log log = LogFactory.getLog(DefaultConfigManager.class);
 
@@ -43,32 +37,32 @@ public class ConfigListener implements ApplicationListener<ApplicationEnvironmen
      */
     private volatile Environment environment = null;
 
+
     @Override
-    public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-        if(environment == null){
-            environment = event.getEnvironment();
+    public PropertySource<?> locate(Environment environment) {
+        if( this.environment == null){
+            this.environment = environment;
         }
         ConfigProperties property = getProperty();
-        init(property);
+        return new RemotePropertySource(CONFIG_NAME, getConfigProperty(property));
     }
+
 
     /**
      * 初始化配置
-     * @param confGroupId
-     * @param confDataId
      */
-    private void init(ConfigProperties properties){
+    private RemoteProperty getConfigProperty(ConfigProperties properties){
         ConfigManager configManager = new DefaultConfigManager(properties);
         //第一次进行初始化配置
         try {
             log.info("初始化获取配置");
-            String content = configManager.getConfig();
-            refreshConfig(content);
+            return configManager.getConfig();
+            //refreshConfig(content);
         }catch (Exception e){
             log.error("初始化获取配置失败");
             e.printStackTrace();
+            return null;
         }
-
         //是否定时刷新
         /*if(confAutoRefresh != null && confAutoRefresh){
             configManager.start((content)->{

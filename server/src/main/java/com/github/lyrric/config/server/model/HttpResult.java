@@ -1,11 +1,8 @@
 package com.github.lyrric.config.server.model;
 
-import lombok.Data;
-
 /**
  * 响应封装
  */
-@Data
 public class HttpResult {
 
     /**
@@ -107,4 +104,35 @@ public class HttpResult {
         return failure(FAILURE_STATUS, UNKNOWN_EXCEPTION_CODE, "系统错误",null);
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 }

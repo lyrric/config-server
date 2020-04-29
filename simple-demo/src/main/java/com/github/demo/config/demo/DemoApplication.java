@@ -1,6 +1,5 @@
 package com.github.demo.config.demo;
 
-import com.github.lyrric.config.client.ConfigListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -17,7 +16,6 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(DemoApplication.class);
-        application.addListeners(new ConfigListener());
         application.run(args);
     }
 }

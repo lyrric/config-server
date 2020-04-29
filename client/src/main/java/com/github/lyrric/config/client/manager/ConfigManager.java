@@ -1,6 +1,10 @@
 package com.github.lyrric.config.client.manager;
 
-import com.github.lyrric.config.client.model.Config;
+import com.github.lyrric.common.model.req.ResConfig;
+import com.github.lyrric.config.client.core.RemotePropertySource;
+import com.github.lyrric.config.client.model.RemoteProperty;
+
+import java.util.List;
 
 /**
  * Created on 2019/3/14.
@@ -13,7 +17,7 @@ public interface ConfigManager {
      * @return
      * @throws Exception
      */
-    String getConfig() throws Exception;
+    RemoteProperty getConfig() throws Exception;
 
     /**
      * 开始定时刷新配置

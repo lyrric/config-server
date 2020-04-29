@@ -2,7 +2,7 @@ package com.github.lyrric.config.client.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.lyrric.common.model.req.ReqConfigParam;
-import com.github.lyrric.config.client.model.Config;
+import com.github.lyrric.common.model.req.ResConfig;
 import com.github.lyrric.config.client.model.HttpResult;
 import com.github.lyrric.config.client.properties.ConfigProperties;
 import okhttp3.*;
@@ -38,10 +38,10 @@ public class HttpClient {
      * 请求配置
      * @return
      */
-    public List<Config> getConfig() throws IOException {
+    public List<ResConfig> getConfig() throws IOException {
         final String url = properties.getServerHost() + "/api/remote/conf/get";
         String json = initPostData();
-        return JSONObject.parseArray(httpPost(url, json), Config.class);
+        return JSONObject.parseArray(httpPost(url, json), ResConfig.class);
     }
     /**
      * 获取配置上一次的修改时间

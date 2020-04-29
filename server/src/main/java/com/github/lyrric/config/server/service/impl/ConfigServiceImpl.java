@@ -1,6 +1,7 @@
 package com.github.lyrric.config.server.service.impl;
 
 import com.github.lyrric.common.model.req.ReqConfigParam;
+import com.github.lyrric.common.model.req.ResConfig;
 import com.github.lyrric.config.server.entity.Config;
 import com.github.lyrric.config.server.mapper.ConfigMapper;
 import com.github.lyrric.config.server.mapper.manual.ConfigExtMapper;
@@ -9,10 +10,12 @@ import com.github.lyrric.config.server.service.ConfigService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.weekend.Weekend;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class ConfigServiceImpl implements ConfigService {
     private ConfigExtMapper configExtMapper;
 
     @Override
-    public List<Config> get(ReqConfigParam param) throws BusinessException {
+    public List<ResConfig> get(ReqConfigParam param) throws BusinessException {
         Weekend<Config> weekend = new Weekend<>(Config.class);
         weekend.weekendCriteria()
                 .andEqualTo(Config::getGroupId, param.getGroupId())
@@ -39,7 +42,13 @@ public class ConfigServiceImpl implements ConfigService {
         if(configs.size() == 0){
             throw new BusinessException("没有符合条件的配置");
         }
-        return configs;
+        List<ResConfig> result = new ArrayList<>(configs.size());
+        configs.forEach(item->{
+            ResConfig resConfig = new ResConfig();
+            BeanUtils.copyProperties(item, resConfig);
+            result.add(resConfig);
+        });
+        return result;
     }
 
     @Override

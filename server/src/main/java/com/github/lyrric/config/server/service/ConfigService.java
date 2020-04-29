@@ -2,6 +2,7 @@ package com.github.lyrric.config.server.service;
 
 
 import com.github.lyrric.common.model.req.ReqConfigParam;
+import com.github.lyrric.common.model.req.ResConfig;
 import com.github.lyrric.config.server.entity.Config;
 import com.github.lyrric.config.server.model.BusinessException;
 import com.github.pagehelper.PageInfo;
@@ -19,7 +20,7 @@ public interface ConfigService {
      * 获取配置
      * @return
      */
-    List<Config> get(ReqConfigParam dtoList) throws BusinessException;
+    List<ResConfig> get(ReqConfigParam dtoList) throws BusinessException;
 
     /**
      * 列表

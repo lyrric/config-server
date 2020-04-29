@@ -1,6 +1,7 @@
 package com.github.lyrric.config.server.controller;
 
 import com.github.lyrric.common.model.req.ReqConfigParam;
+import com.github.lyrric.common.model.req.ResConfig;
 import com.github.lyrric.config.server.entity.Config;
 import com.github.lyrric.config.server.model.BusinessException;
 import com.github.lyrric.config.server.service.ConfigService;
@@ -31,7 +32,7 @@ public class RemoteController {
      * @return
      */
     @PostMapping(value = "/get")
-    public List<Config> get(@RequestBody ReqConfigParam param) throws BusinessException {
+    public List<ResConfig> get(@RequestBody ReqConfigParam param) throws BusinessException {
         return configService.get(param);
     }
 

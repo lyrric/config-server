@@ -1,7 +1,6 @@
 package com.github.lyrric.config.server.model;
 
 import com.github.pagehelper.Page;
-import lombok.Data;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import java.util.List;
  * 分页返回
  * @author wangxiaodong
  */
-@Data
 public class PageResult {
     /**
      * 数据总数
@@ -32,5 +30,29 @@ public class PageResult {
         data = page.getResult();
         totalCount = page.getTotal();
         totalPage = page.getPages();
+    }
+
+    public long getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(long totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public long getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(long totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List getData() {
+        return data;
+    }
+
+    public void setData(List data) {
+        this.data = data;
     }
 }

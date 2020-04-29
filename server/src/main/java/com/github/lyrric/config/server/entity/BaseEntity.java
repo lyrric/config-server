@@ -4,7 +4,6 @@
  */
 package com.github.lyrric.config.server.entity;
 
-import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import tk.mybatis.mapper.code.IdentityDialect;
 
@@ -16,7 +15,6 @@ import javax.persistence.Id;
  * @author YuBo
  * @version $Id: IdAutoIncrementStrategy.java, v0.1 2018/11/4 0:06 YuBo Exp $$
  */
-@Data
 public class BaseEntity {
 
     @Id
@@ -24,4 +22,11 @@ public class BaseEntity {
     @Column(insertable = false, updatable = false)
     protected Integer id;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

@@ -1,8 +1,9 @@
 package com.github.lyrric.config.client.manager;
 
-import com.github.lyrric.config.client.model.Config;
+import com.github.lyrric.common.model.req.ResConfig;
+import com.github.lyrric.config.client.core.RemotePropertySource;
+import com.github.lyrric.config.client.model.RemoteProperty;
 import com.github.lyrric.config.client.properties.ConfigProperties;
-import com.github.lyrric.config.client.util.ConfigUtil;
 import com.github.lyrric.config.client.util.HttpClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,10 +33,8 @@ public class DefaultConfigManager implements ConfigManager {
     }
 
     @Override
-    public String getConfig() throws Exception {
-        List<Config> configList = httpClient.getConfig();
-        modifyTimeMap = configList.stream().collect(Collectors.toMap(Config::getDataId, Config::getModifiedTime));
-        return ConfigUtil.parseConfigContent(configList);
+    public RemoteProperty getConfig() throws Exception {
+        return new RemoteProperty(httpClient.getConfig());
     }
 
     @Override
@@ -43,18 +42,18 @@ public class DefaultConfigManager implements ConfigManager {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                try {
+               /* try {
                     if(checkConfigModify()){
-                        List<Config> configList =  httpClient.getConfig();
+                        List<ResConfig> configList =  httpClient.getConfig();
                         String content = ConfigUtil.parseConfigContent(configList);
                         event.onchange(content);
-                        modifyTimeMap = configList.stream().collect(Collectors.toMap(Config::getDataId, Config::getModifiedTime));
+                        modifyTimeMap = configList.stream().collect(Collectors.toMap(ResConfig::getDataId, ResConfig::getModifiedTime));
                         log.info("配置更新完成");
                     }
                 } catch (IOException e) {
                     log.error("定时获取任务失败");
                     e.printStackTrace();
-                }
+                }*/
             }
         };
         Timer timer = new Timer();

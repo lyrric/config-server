@@ -1,9 +1,9 @@
-package com.github.lyrric.config.client.model;
+package com.github.lyrric.common.model.req;
 
 
 import java.util.Date;
 
-public class Config {
+public class ResConfig {
 
     private Integer id;
 
