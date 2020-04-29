@@ -29,21 +29,19 @@ config-server可以将写在配置中心里面，然后在服务端只需要简�
 1. 依赖maven
 ```
   <dependency>
-            <groupId>com.github.lyrric</groupId>
-            <artifactId>config-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <groupId>com.github.lyrric</groupId>
+        <artifactId>config-client</artifactId>
+        <version>1.0-SNAPSHOT</version>
+  </dependency>
 ```
 2. 在yml中配置好信息
 ```
 conf:
-	  server-host: http://localhost:8088  #配置中心地址
-	  req-timeout: 2000  #请求超时时间
-	  group-id: test_group  #group-id
-	  data-ids:  #data-ids，支持同group-id下的多个data-id
-		- test_data1
-		- test_data2
+  server-host: http://localhost:8088  #配置中心地址
+  req-timeout: 2000  #请求超时时间
+  group-id: test_group  #group-id
+  data-ids:  #data-ids，支持同group-id下的多个data-id
+    - test_data1
+    - test_data2
 ```
-
-
 ### 愉快的使用吧
