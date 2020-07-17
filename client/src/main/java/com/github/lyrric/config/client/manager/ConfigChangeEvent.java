@@ -8,7 +8,7 @@ package com.github.lyrric.config.client.manager;
 public interface ConfigChangeEvent {
 
     /**
-     * 当配置发生改变时会处罚此时间
+     * 当配置发生改变时会触发此事件
      * @param content
      */
     void onchange(String content);

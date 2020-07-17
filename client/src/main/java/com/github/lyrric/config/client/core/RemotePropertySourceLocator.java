@@ -99,8 +99,8 @@ public class RemotePropertySourceLocator implements PropertySourceLocator {
         }
         properties.setGroupId(groupId);
         List<String> dataIds  = new ArrayList<>();
-        for (Integer i = 0; ; i++) {
-            String dataId = environment.getProperty("conf".concat(".data-ids[").concat(i.toString()).concat("]"));
+        for (int i = 0; ; i++) {
+            String dataId = environment.getProperty("conf".concat(".data-ids[").concat(Integer.toString(i)).concat("]"));
             if(StringUtils.isEmpty(dataId)){
                 break;
             }
@@ -109,7 +109,7 @@ public class RemotePropertySourceLocator implements PropertySourceLocator {
         if(dataIds.size() == 0){
             throw new NullPointerException("Missing Property conf.data-ids");
         }
-        properties.setDataIds(dataIds.toArray(new String[dataIds.size()]));
+        properties.setDataIds(dataIds.toArray(new String[0]));
         return properties;
     }
 }
